@@ -4,6 +4,7 @@ import requests
 url = 'http://hotels.ctrip.com/hotel/chongqing4#ctm_ref=hod_hp_sb_lst'
 
 wb_data = requests.get(url)
+
 soup = BeautifulSoup(wb_data.text, 'lxml')
 titles = soup.select('h2 > a')
 rates = soup.select('span.hotel_value')

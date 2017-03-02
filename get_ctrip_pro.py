@@ -3,7 +3,7 @@ import time
 from selenium import webdriver
 from selenium.webdriver import ActionChains
 
-url = 'http://hotels.ctrip.com/hotel/chongqing4#ctm_ref=hod_hp_sb_lst'
+url = 'http://hotels.ctrip.com/hotel/shanghai2#ctm_ref=hod_hp_sb_lst'
 
 driver = webdriver.Chrome()
 driver.get(url)
@@ -11,7 +11,11 @@ driver.get(url)
 name_counter = 1
 page = 0
 time.sleep(3)
-driver.find_element_by_class_name('fl_wrap_close').click()
+try:
+    driver.find_element_by_class_name('fl_wrap_close').click()
+except ValueError:
+    print("No AD need to be closed!")
+
 while page < 10:
     soup = BeautifulSoup(driver.page_source, 'lxml')
     titles = soup.select('h2 > a')
