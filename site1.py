@@ -1,18 +1,22 @@
 from bs4 import BeautifulSoup
 import requests
+from multiprocessing import Pool
 
-url = 'http://www.tripadvisor.cn/Hotels-g298566-Osaka_Osaka_Prefecture_Kinki-Hotels.html'
-wb_data = requests.get(url)
-soup = BeautifulSoup(wb_data.text, 'lxml')
-titles = soup.select('div.listing_title > a')
-imgs = soup.select('img[width="180"]')
-cates = soup.select('div.clickable_tags')
-# print(titles, imgs, cates)
 
-for title, img, cate in zip(titles, imgs, cates):
-    data = {
-        'title': title.get_text(),
-        'img': img.get('src'),
-        'cate': list(cate.stripped_strings),
-    }
-    print(data)
+url = 'http://pop-api.pjbest.com/pop-apis/'
+def get_apis(num):
+    while True:
+        wb_data = requests.get(url)
+        num = num + 1
+        print(num)
+
+if __name__ == '__main__':
+    pool = Pool(processes=2)
+    pool.map(get_apis(0))
+# for title, img, cate in zip(titles, imgs, cates):
+#     data = {
+#         'title': title.get_text(),
+#         'img': img.get('src'),
+#         'cate': list(cate.stripped_strings),
+#     }
+#     print(data)
